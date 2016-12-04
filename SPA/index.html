@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html ng-app="AngularDemo">
+
+<head>
+	<!-- head section -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>SS Calendar</title>
+	<meta name="robots" content="noindex">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"
+		rel="stylesheet">
+	<link type="text/css" href="/assets/stylesheets/style.css" rel="stylesheet">
+	<link href='/assets/stylesheets/fullcalendar.css' rel='stylesheet' />
+	<link href='/assets/stylesheets/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<link type="text/css" href="/assets/stylesheets/sweetalert.min.css" rel="stylesheet">
+</head>
+
+<body class="layout-container ls-top-navbar si-l3-md-up">
+	<nav class="navbar navbar-light bg-white navbar-full navbar-fixed-top ls-left-sidebar bg-primary" ng-show="myvalue">
+		<!-- Sidebar toggle -->
+		<button class="navbar-toggler pull-xs-left hidden-lg-up" type="button" data-toggle="sidebar" data-target="#sidebarLeft"><span class="material-icons">menu</span></button>
+
+		<!-- Menu -->
+		<ul class="nav navbar-nav pull-xs-right hidden-sm-down nav-strip-right">
+			<!-- User dropdown -->
+			<li class="nav-item dropdown">
+				<a class="nav-link active dropdown-toggle p-a-0" data-toggle="dropdown" href="" role="button" aria-haspopup="false">
+					<img src="/content/images/logo1.png" alt="Avatar" class="img-circle" width="40">
+				</a>
+				<div class="dropdown-menu dropdown-menu-right dropdown-menu-list" aria-labelledby="Preview">
+					<a class="dropdown-item" href="#account-setting"><i class="material-icons md-18">person</i> <span class="icon-text">Edit Account</span></a>
+					<div ng-controller="LogCtrl">
+						<a class="dropdown-item" href="" ng-click="doLogout()"><i class="material-icons md-18">lock</i> <span class="icon-text">Logout</a>
+					</div>
+			</li>
+		</ul>
+		<!-- // END Menu -->
+
+	</nav>
+	<!-- // END Navbar -->
+	<!-- Sidebar -->
+	<div class="sidebar sidebar-left si-si-3 sidebar-visible-md-up sidebar-dark bg-primary" id="sidebarLeft" data-scrollable>
+		<a href="#dashboard" class="sidebar-brand">
+			<i class="material-icons">event_note</i> Silicon Straits
+		</a>
+
+		<!-- User -->
+		<a href="#dashboard" class="sidebar-link sidebar-user" ng-show="myvalue">
+			<img src="/content/images/logo.png" alt="user" class="img-circle"> SS Calendar
+		</a>
+		<!-- // END User -->
+		<!-- Menu -left side-->
+		<ul class="sidebar-menu sm-bordered sm-active-button-bg">
+			<!-- // SS calendar -->
+			<li class="sidebar-menu-item active" ng-show="myvalue">
+				<a class="sidebar-menu-button" href="#dashboard">
+					<i class="sidebar-menu-icon material-icons">home</i> Booking Calendar
+				</a>
+			</li>
+			<!-- // Manage room -->
+			<li class="sidebar-menu-item">
+				<a class="sidebar-menu-button" href="#manage-room" ng-show="myvalue">
+					<i class="sidebar-menu-icon material-icons">tune</i> Manage Room
+				</a>
+			</li>
+			<li class="sidebar-menu-item" ng-show="myvalue">
+				<a class="sidebar-menu-button" href="#account-setting">
+					<i class="sidebar-menu-icon material-icons">assignment</i> Account Setting
+				</a>
+			</li>
+		</ul>
+		
+		<!-- Stats -->
+		<div class="sidebar-stats">
+			<div class="sidebar-stats-lead text-primary">
+
+				<input id="DATE" name="DATE" style="font-size:30px; width:230px; border:none">
+
+				<small class="text-success">
+          
+          <span class="icon-text"></span>
+        </small>
+			</div>
+			<small>SS Calendar</small>
+		</div>
+	</div>
+
+	<!--Main view-->
+	<div class="layout-content" style="background:white;" data-scrollable>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="container">
+					<div ng-view>
+						</br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- jQuery-->
+	<script src="/assets/javascripts/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="/jquery/dist/jquery.min.js"></script>
+	<script src="/tether/dist/js/tether.min.js"></script>
+	<!--<script src="/javascripts/bootstrap.min.js"></script>-->
+	<script src="/assets/javascripts/sweetalert.min.js"></script>
+	<!-- Initialize -->
+	<script src="/assets/javascripts/sweetalert.js"></script>
+	<!-- AdminPlus <script src="/javascripts/main.min,js"></script>-->
+	<script src="/assets/javascripts/adminplus.js"></script>
+	<script src='/assets/javascripts/moment.min.js'></script>
+	<script src='/assets/javascripts/fullcalendar.min.js'></script>
+	<!--<script src="jquery/jquery.js" ></script>-->
+	<script src="bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="angular/angular.min.js"></script>
+
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-cookies.js"></script>
+	<script src="angular-messages/angular-messages.min.js"></script>
+	<script src="angular-route/angular-route.min.js"></script>
+	<script src="toastr/toastr.js"></script>
+	<script src="app/app.js"></script>
+	<script src="app/services/errorService.js"></script>
+	<!--Controller & Service import-->
+	<script src="app/controllers/roomController.js"></script>
+	<script src="app/services/roomService.js"></script>
+	<script src="app/controllers/ssController.js"></script>
+	<script src="app/controllers/loginController.js"></script>
+	<script src="app/services/ssService.js"></script>
+	<script src="app/services/canlendar.js"></script>
+	<script src="app/services/angular-cookies.js"></script>
+	<script src="app/services/authFact.js"></script>
+	<script src="app/services/logService.js"></script>
+	<script src='/assets/javascripts/mainModal.js'></script>
+
+	<script>
+      var today = new Date();      
+      var dd = today.getDate();
+      var mm = today.getMonth(); //January is 0!
+      
+      var month = new Array();
+      month[0] = "January";
+      month[1] = "February";
+      month[2] = "March";
+      month[3] = "April";
+      month[4] = "May";
+      month[5] = "June";
+      month[6] = "July";
+      month[7] = "August";
+      month[8] = "September";
+      month[9] = "October";
+      month[10] = "November";
+      month[11] = "December";
+      var monthName = month[mm];
+      var yyyy = today.getFullYear();
+      if(dd<10){
+          dd='0'+dd
+      } 
+      if(mm<10){
+          mm='0'+mm
+      } 
+      var today = dd+' '+monthName+' '+yyyy;
+      document.getElementById("DATE").value = today;
+    </script>
+</body>
+
+</html>

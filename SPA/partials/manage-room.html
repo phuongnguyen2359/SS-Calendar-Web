@@ -1,0 +1,163 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header" style="color: white; background:#039BE5;">Room List</div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Room Title</th>
+                        <th>Description</th>
+                        <th style="text-align: center;">Edit</th>
+                        <th style="text-align: center;">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="room in vm.rooms">
+                        <td>{{room.name}}</td>
+                        <td>{{room.description}}</td>
+                        <td><button type="submit" ng-click="vm.getRoom(room.id)" class="btn-white btn-sm btn-xs text-warning btn btn-warning"
+                                data-toggle="modal" data-target="#myModalNorm" style=" margin-left: 10%; margin-right:10%;"><i class="material-icons md-18">edit</i></button></td>
+                        <td><button type="submit" ng-click="vm.getRoom(room.id)" class="btn btn-white btn-xs text-danger btn btn-warning"
+                                data-toggle="modal" data-target="#confirm-delete" style=" margin-left: 25%; margin-right:25%;"><i class="material-icons md-18">delete</i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header" style="color: white; background:#039BE5;">Add Room</div>
+            <div class="card-block">
+                <h5></h5>
+                <!-- add room---->
+                <form name="addForm" ng-submit="addForm.$valid && vm.addReview()" novalidate>
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 form-control-label">Room Title</label>
+                        <div class="col-sm-9">
+                            <fieldset class="form-group">
+                                <input name="roomTitle" ng-model="vm.review.name" type="text" class="form-control" id="inputEmail3" placeholder="Room title"
+                                    required blur="submitToggle" ng-maxlength="15" ng-change="vm.checkRoom()">
+                                <div ng-messages="addForm.roomTitle.$dirty && addForm.roomTitle.$error" style="color:maroon" role="alert">
+                                    <p ng-message="required"><i class="material-icons md-18">error</i>You did not enter room title</p>
+                                    <div ng-message="maxlength">Room field is too long</div>
+                                </div>
+                                <div ng-messages="addForm.roomTitle.$error" class="message-error" style="color:maroon" role="alert">
+                                    <p ng-message="checkRoom">This room exited!!!</p>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputPassword3" class="col-sm-3 form-control-label">Description</label>
+                        <div class="col-sm-9">
+                            <fieldset class="form-group">
+                                <textarea name="roomDes" id="idDescrip" ng-model="vm.review.description" type="text" class="form-control" rows="4" placeholder="Write a short review of the room..."
+                                    title="Des" required></textarea>
+                                <div ng-messages="addForm.roomDes.$dirty && addForm.roomDes.$error" style="color:maroon" role="alert">
+                                    <div ng-message="required"><i class="material-icons md-18">error</i>You did not enter room description</div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-9"></div>
+                    </div>
+
+                    <div class="form-group row m-b-0">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <fieldset class="form-group">
+                                <button type="submit" class="btn btn-primary" ng-disabled="!addForm.$valid">Add Room</button>
+                            </fieldset>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Modal delete-->
+
+    <form name="delForm" ng-submit="vm.deleteRoom(vm.roomEdit)">
+        <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure to delete ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">
+                        Delete
+                </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+    <!--Modal edit room-->
+    <form name="editForm" ng-submit="vm.editRoom(vm.roomEdit)" novalidate>
+        <div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                        <h4 class="modal-title" id="myModalLabel">
+                            Edit Room
+                        </h4>
+                    </div>
+                    <!-- Modal Body -->
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Room Title</label>
+                                <fieldset class="form-group">
+                                    <input name="roomTile" ng-model="vm.roomEdit.name" type="text" class="form-control" placeholder="Room title" required blur="submitToggle"
+                                        >
+                                    <div ng-messages="editForm.roomTile.$dirty && editForm.roomTile.$error" style="color:maroon" role="alert">
+                                        <div ng-message="required"><i class="material-icons md-18">error</i>You did not enter room title</div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Room Description</label>
+                                <fieldset class="form-group">
+                                    <input name="roomDes" ng-model="vm.roomEdit.description" type="text" class="form-control" placeholder="Room description"
+                                        required blur="submitToggle">
+                                    <div ng-messages="editForm.roomDes.$dirty && editForm.roomDes.$error" style="color:maroon" role="alert">
+                                        <div ng-message="required"><i class="material-icons md-18">error</i>You did not write description</div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Close
+                </button>
+                        <button type="submit" class="btn btn-primary" ng-disabled="!editForm.$valid">
+                        Save changes
+                </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

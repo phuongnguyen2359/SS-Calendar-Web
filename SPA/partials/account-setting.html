@@ -1,0 +1,217 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header" style="color: white; background:#039BE5;">User List</div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+
+                        <th style="text-align: center;">Edit</th>
+                        <th style="text-align: center;">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in vm.users">
+                        <td>#</td>
+                        <td>{{user.username}}</td>
+
+                        <td><button type="submit" ng-click="vm.getUser(user.username)" class="btn-white btn-sm btn-xs text-warning btn btn-warning"
+                                data-toggle="modal" data-target="#myModalNorm" style=" margin-left: 25%; margin-right:25%;"><i class="material-icons md-18">edit</i></button></td>
+                        <!--<td><button type="submit" ng-click="vm.deleteRoom(user)" class="btn btn-white btn-xs text-danger btn btn-warning" style=" margin-left: 25%; margin-right:25%;"><i class="material-icons md-18">delete</i></button></td>              -->
+                        <td><button type="submit" ng-click="vm.getUser(user.username)" class="btn btn-white btn-xs text-danger btn btn-warning"
+                                data-toggle="modal" data-target="#confirm-delete" style=" margin-left: 25%; margin-right:25%;"><i class="material-icons md-18">delete</i></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header" style="color: white; background:#039BE5;">Add Account</div>
+            <div class="card-block">
+                <h5></h5>
+                <!-- add room---->
+                <form name="addForm" ng-submit="addForm.$valid && vm.addUser()" novalidate>
+
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-3 form-control-label">Username</label>
+                        <div class="col-sm-9">
+                            <fieldset class="form-group">
+                                <input name="username" ng-pattern="/^\s*\w*\s*$/" ng-model="vm.user.username" type="text" class="form-control" id="usernameFilde"
+                                    placeholder="username" required blur="submitToggle" ng-maxlength="15" ng-change="vm.checkUser()">
+                                <div ng-messages="addForm.username.$dirty && addForm.username.$error" style="color:maroon" role="alert">
+                                    <div ng-message="required">You did not enter a username</div>
+                                    <div ng-message="maxlength">Username field is too long</div>
+                                    <div ng-message="pattern">Invalid username</div>
+                                </div>
+                                <div ng-messages="addForm.username.$error" class="message-error" style="color:maroon" role="alert">
+                                    <div ng-message="checkUser">This user exited</divp>
+                                    </div>
+                            </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div ng-if="!showPassword">
+                                <label for="password" class="col-sm-3 form-control-label">Password</label>
+                                <div class="col-sm-9">
+
+                                    <fieldset class="form-group">
+
+                                        <input name="passwordFiled" ng-model="vm.user.password" style="width: 93%; padding: 0.375rem 0.75rem; font-size: 1rem; line-height: 1.5; color: #55595c; background-color: #fff; background-image: none; border: 1px solid #eceeef; border-radius: 0.25rem;"
+                                            type="password" id="passwordFilde" placeholder="password" required blur="submitToggle">
+
+                                        <span ng-if="vm.user.password" ng-click="toggleShowPassword()">
+              <i class="material-icons md-18" style="cursor: pointer; pointer-events: all;">visibility</i>
+        </span>
+
+
+                                        <div ng-messages="addForm.passwordFiled.$dirty && addForm.passwordFiled.$error" style="color:maroon" role="alert">
+                                            <div ng-message="required">You did not enter password</div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+
+
+                            <div ng-if="showPassword">
+                                <label for="password" class="col-sm-3 form-control-label">Password</label>
+                                <div class="col-sm-9">
+
+                                    <fieldset class="form-group">
+
+                                        <input name="passwordFiled" ng-model="vm.user.password" style="width: 93%; padding: 0.375rem 0.75rem; font-size: 1rem; line-height: 1.5; color: #55595c; background-color: #fff; background-image: none; border: 1px solid #eceeef; border-radius: 0.25rem;"
+                                            type="text" id="passwordFilde" placeholder="password" required blur="submitToggle">
+
+                                        <span ng-if="vm.user.password" ng-click="toggleShowPassword()">
+              <i class="material-icons md-18" style="cursor: pointer; pointer-events: all;">visibility</i>
+        </span>
+
+
+                                        <div ng-messages="addForm.passwordFiled.$dirty && addForm.passwordFiled.$error" style="color:maroon" role="alert">
+                                            <div ng-message="required">You did not enter password</div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="repassword" class="col-sm-3 form-control-label">Re-Password</label>
+                            <div class="col-sm-9">
+                                <fieldset class="form-group">
+                                    <input name="repasswordFilde" ng-model="vm.user.repassword" type="password" class="form-control" id="repasswordFilde" placeholder="password"
+                                        required blur="submitToggle" ng-change="vm.comparePass()">
+
+                                    <div ng-messages="addForm.repasswordFilde.$error" class="message-error" style="color:maroon" role="alert">
+                                        <p ng-message="comparePass">Re-password doesn't match!!!</p>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-9"></div>
+                        </div>
+
+                        <div class="form-group row m-b-0">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <fieldset class="form-group">
+                                    <button type="submit" class="btn btn-primary" ng-disabled="!addForm.$valid">Create Account</button>
+                                </fieldset>
+                            </div>
+                        </div>
+
+                </form>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Modal delete-->
+        <form name="delForm" ng-submit="vm.deleteRoom(vm.userEdit)">
+            <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <p>Are you sure to delete ?</p>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger">
+                        Delete
+                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <!--Modal edit -->
+        <form name="editForm" ng-submit="vm.editUser(vm.userEdit)" novalidate>
+            <div class="modal fade" id="myModalNorm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                       <span aria-hidden="true">&times;</span>
+                       <span class="sr-only">Close</span>
+                </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                Edit Account
+                            </h4>
+                        </div>
+
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <form role="form">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Username</label>
+                                    <fieldset class="form-group">
+                                        <input name="username" ng-model="vm.userEdit.username" type="text" class="form-control" id="repassword" placeholder="username"
+                                            readonly="readonly" required blur="submitToggle">
+                                        <div ng-messages="editForm.username.$dirty && editForm.username.$error" style="color:maroon" role="alert">
+                                            <div ng-message="required"><i class="material-icons md-18">error</i>You did not enter username</div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Password</label>
+                                    <fieldset class="form-group">
+                                        <input name="passsword" ng-model="vm.userEdit.password" type="text" class="form-control" id="repassword" placeholder="password"
+                                            required blur="submitToggle">
+                                        <div ng-messages="editForm.passsword.$dirty && editForm.passsword.$error" style="color:maroon" role="alert">
+                                            <div ng-message="required"><i class="material-icons md-18">error</i>You did not enter password</div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </form>
+
+                        </div>
+                        <!-- Modal Footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                            Close
+                </button>
+                            <button type="submit" class="btn btn-primary" ng-disabled="!editForm.$valid">
+                        Save changes
+                </button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
