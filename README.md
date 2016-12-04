@@ -20,9 +20,9 @@ The following **required** Device:
 
 The following **web** features are implemented:
 
-- [ ] Add/ Delete/ Edit user.
-- [ ] Add/ Delete/ Edit account.
-- [ ] Cancel booking.
-- [ ] View all bookings in a day, a month etc.
+- [x] Add/ Delete/ Edit user.
+- [x] Add/ Delete/ Edit account.
+- [x] Cancel booking.
+- [x] View all bookings in a day, a month etc.
 
 ## Video Walkthrough
